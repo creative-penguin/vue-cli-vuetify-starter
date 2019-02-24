@@ -1,6 +1,6 @@
 {
-  "name": "yt-vue",
-  "short_name": "yt-vue",
+  "name": "vue-cli-vuetify-starter",
+  "short_name": "vue-cli-vuetify-starter",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",

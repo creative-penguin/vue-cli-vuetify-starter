@@ -1,4 +1,4 @@
-# yt-vue
+# vue-cli-vuetify-starter
 
 ## Project setup
 ```
