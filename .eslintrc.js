@@ -1,14 +1,79 @@
 module.exports = {
-  root: true,
-  env: {
-    node: true
-  },
-  extends: ["plugin:vue/essential", "@vue/prettier", "@vue/typescript"],
-  rules: {
-    "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off"
-  },
-  parserOptions: {
-    parser: "@typescript-eslint/parser"
-  }
+   root: true,
+   env: {
+      node: true,
+   },
+   extends: [ 'plugin:vue/recommended', '@vue/typescript', '@silvermine/eslint-config' ],
+   parserOptions: {
+      // This parser will be used for script tags
+      parser: '@typescript-eslint/parser',
+   },
+   rules: {
+      // Throws false positives for decorators in TypeScript
+      'new-cap': 'off',
+      'vue/html-closing-bracket-newline': [
+         'error',
+         {
+            singleline: 'never',
+            multiline: 'never',
+         },
+      ],
+      'vue/max-attributes-per-line': [
+         'error',
+         {
+            // This allows as many attributes as max-len allows for singleline tags
+            singleline: 999,
+            multiline: {
+               max: 1,
+               allowFirstLine: true,
+            },
+         },
+      ],
+
+      // The following emulate the @silvermine config in template tags
+      'vue/brace-style': [ 'error', '1tbs' ],
+      'vue/eqeqeq': 'error',
+      'vue/array-bracket-spacing': [ 'error', 'always' ],
+      'vue/arrow-spacing': [ 'error', { before: true, after: true } ],
+      'vue/block-spacing': 'error',
+      'vue/camelcase': 'error',
+      'vue/key-spacing': 'error',
+      'vue/match-component-file-name': [ 'error', { extensions: [ 'vue', 'ts' ] } ],
+      'vue/no-boolean-default': 'off',
+      'vue/object-curly-spacing': [ 'error', 'always' ],
+      'vue/space-infix-ops': 'error',
+      'vue/space-unary-ops': 'error',
+      'vue/html-indent': [
+         'error',
+         3,
+         {
+            attribute: 1,
+            baseIndent: 1,
+            closeBracket: 0,
+            alignAttributesVertically: true,
+         },
+      ],
+   },
+   globals: {
+      CONFIG: true,
+   },
+
+   /*
+    * War of the parsers
+    *
+    * The @silvermine config sets an override for ts filse to use the
+    * @typescript-eslint/parser, but since we ts files will import vue files eslint is not
+    * using the vue parser for the imported vue files. so we need to re overide it.
+    */
+   overrides: [
+      {
+         files: [ '*.ts' ],
+
+         parser: 'vue-eslint-parser',
+         parserOptions: {
+            // this parser will be used for script tags
+            parser: '@typescript-eslint/parser',
+         },
+      },
+   ],
 };
